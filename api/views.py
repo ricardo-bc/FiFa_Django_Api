@@ -14,7 +14,30 @@ import json
 import api.models as dbFiFa
 import requests as requesthttp
 
+@api_view(['POST'])
+@csrf_exempt
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def geListPlayers(request):
+    try:
+        players = list(dbFiFa.gamer.objects.all())
+        listPlayers = []
+        for player in players:
+            listPlayers.append({
+                'id':player.id,
+                'name':player.name,
+                'game_position':player.game_position,
+                'nationality': player.nationality,
+                'team':player.team,
+            } )
 
+        return Response(listPlayers,status=200)
+
+    except KeyError as e:
+        print(e)
+        return Response({"Error": str(e)},status=446)
+    except Exception as e:
+        print(e)
 @api_view(['POST'])
 @csrf_exempt
 @authentication_classes([TokenAuthentication])

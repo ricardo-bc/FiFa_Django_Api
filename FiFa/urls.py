@@ -25,5 +25,6 @@ urlpatterns = [
     path('api/v1/team', views.geTeam),                                                 
     path('api/v1/players', views.getPlayers),                            
     path('api/v1/save_fifa_api_players', views.saveFifaApiPlayers),  
+    path('api/v1/players_list',views.geListPlayers),
     path('api-token-auth/',obtain_auth_token, name= 'api-token-auth')     
 ]
