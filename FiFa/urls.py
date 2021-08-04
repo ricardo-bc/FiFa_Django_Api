@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+#from api.views import custom404, custom500, custom403
+from api import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('/', include('api.urls')),
+    path('api/v1/team', views.geTeam),                                                 
+    path('api/v1/players', views.getPlayers),                            
+    path('api/v1/save_fifa_api_players', views.saveFifaApiPlayers),  
+    path('api-token-auth/',obtain_auth_token, name= 'api-token-auth')     
 ]
