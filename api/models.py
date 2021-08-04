@@ -9,6 +9,7 @@ class gamer(models.Model):
     game_position = models.CharField(max_length=50, default='')
     nationality = models.CharField(max_length=50, default='')
     team = models.CharField(max_length=50, default='')
+    page = models.IntegerField(default=1)
     def __str__(self):
         return self.name
 
