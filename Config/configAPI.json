@@ -1,0 +1,24 @@
+{
+  "general":
+  [
+    {
+      "DEBUG": false,
+      "log":true,
+      "url_base":"localhost",
+      "puerto_api":"8100",
+      "protocolo":"http://",
+      "zona_horaria": "America/Mexico_City",
+      "idioma": "es",
+      "ENGINE_postgres": "django.db.backends.postgresql",
+	    "NAME_postgres": "postgres",
+      "USER_postgres": "postgres",
+      "PASSWORD_postgres": "andres117",
+      "HOST_postgres": "34.135.1.143",
+      "PORT_postgres": "5432",
+      "DataBase": "default",
+      "UTC_LOG": 5,  
+      "path_log":"Log/",
+      "log_level":0
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+django
+django-cors-headers
+django-matplotlib
+django-session-timeout
+djangorestframework
+djangorestframework-simplejwt
+drf-jwt~=1.13.3
+requests~=2.22.0
+social-auth-app-django
+django_session_timeout
+python-jose
+pyjwt~=1.7.1
+psycopg2
