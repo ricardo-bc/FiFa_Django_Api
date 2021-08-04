@@ -31,7 +31,7 @@ def saveFifaApiPlayers(page):
             cursor = conn.cursor()
             data = json.loads(request_query.text)
             playersinfo = data['items']
-            [savePlayerDB(player,cursor) for player in playersinfo]
+            [savePlayerDB(player,page,cursor) for player in playersinfo]
             conn.commit()
             print('End Save DataBase')
         else:
@@ -43,7 +43,7 @@ def saveFifaApiPlayers(page):
         print(e)
 
 
-def savePlayerDB(player,cursor):
+def savePlayerDB(player,page,cursor):
     try:
         namePlayer = 'None'
         nationalityPlayer = 'None'
@@ -62,7 +62,7 @@ def savePlayerDB(player,cursor):
             teamPlayer = player['club']['name']
         
 
-        insert_query = "INSERT INTO api_gamer (name,game_position,nationality,team) VALUES ('"+str(namePlayer)+"','"+str(positionPlayer)+ "','"+str(nationalityPlayer)+"','"+str(teamPlayer)+"')"
+        insert_query = "INSERT INTO api_gamer (name,game_position,nationality,team,page) VALUES ('"+str(namePlayer)+"','"+str(positionPlayer)+ "','"+str(nationalityPlayer)+"','"+str(teamPlayer)+"','"+str(page)+"')"
         cursor.execute(insert_query)
         print("player "+str(namePlayer)+" inserted successfully")
     except KeyError as e:
