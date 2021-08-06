@@ -46,7 +46,7 @@ def geTeam(request):
     try:
         teamN = request.data['name']
         page_num = request.data['page']
-        teamPlay = list(dbFiFa.gamer.objects.filter(team__icontains=teamN,page=page_num))
+        teamPlay = list(dbFiFa.gamer.objects.filter(team__icontains=teamN)) # page=page_num
 
         teamPlayers = []
         if teamPlay != []:
@@ -90,7 +90,7 @@ def getPlayers(request):
         name_player = request.data['search']
         page_p = request.data['page']
         order = request.data['order']
-        listPlayers = list(dbFiFa.gamer.objects.filter(name__icontains=name_player,page=page_p))
+        listPlayers = list(dbFiFa.gamer.objects.filter(name__icontains=name_player)) # ,page=page_p
 
         if order == "desc":
             listPlayers = listPlayers.sort(key=lambda player: player.name,reverse=True)
@@ -99,7 +99,7 @@ def getPlayers(request):
             listPlayers =  sorted(listPlayers, key=lambda player: player.name, reverse=False)
 
         listPla = []
-        if listPla != []:
+        if listPlayers != []:
             for player in listPlayers:
                 listPla.append({
                     'id':player.id,
