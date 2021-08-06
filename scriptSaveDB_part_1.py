@@ -33,7 +33,7 @@ def saveFifaApiPlayers(page):
             playersinfo = data['items']
             [savePlayerDB(player,page,cursor) for player in playersinfo]
             conn.commit()
-            print('End Save DataBase')
+            print('End Connection to DataBase')
         else:
             print("Error status_code Api Fifa"+str(request_query.status_code))
   
@@ -42,7 +42,11 @@ def saveFifaApiPlayers(page):
     except Exception as e:
         print(e)
 
-
+def existPlayer(cursor,playername):
+        query = "SELECT name FROM api_gamer where name = '"""+str(playername.replace("'",""))+ "'"
+        cursor.execute(query)
+        data = cursor.fetchall()
+        return data
 def savePlayerDB(player,page,cursor):
     try:
         namePlayer = 'None'
@@ -62,9 +66,14 @@ def savePlayerDB(player,page,cursor):
             teamPlayer = player['club']['name']
         
 
-        insert_query = "INSERT INTO api_gamer (name,game_position,nationality,team,page) VALUES ('"+str(namePlayer)+"','"+str(positionPlayer)+ "','"+str(nationalityPlayer)+"','"+str(teamPlayer)+"','"+str(page)+"')"
-        cursor.execute(insert_query)
-        print("player "+str(namePlayer)+" inserted successfully")
+        exist = existPlayer(cursor,namePlayer)
+        if exist == []:
+            insert_query = "INSERT INTO api_gamer (name,game_position,nationality,team,page) VALUES ('"+str(namePlayer.replace("'"," "))+"','"+str(positionPlayer.replace("'"," "))+ "','"+str(nationalityPlayer.replace("'"," "))+"','"+str(teamPlayer.replace("'"," "))+"','"+str(page)+"')"
+            cursor.execute(insert_query)
+            print("player "+str(namePlayer)+" inserted successfully")
+        else:
+            print("player "+str(namePlayer)+" exist ")
+ 
     except KeyError as e:
         print(e)
     except Exception as e:

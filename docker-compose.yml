@@ -2,7 +2,9 @@ version: "3"
 services:
   api:
     build: .
-    command: "python manage.py runserver [::]:8200"
+    command: sh -c "python manage.py makemigrations &&
+                    python manage.py migrate &&
+                    python manage.py runserver [::]:8200"
     ports:
       - "8200:8200"
     stdin_open: true

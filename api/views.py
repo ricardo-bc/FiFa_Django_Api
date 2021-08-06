@@ -14,7 +14,7 @@ import json
 import api.models as dbFiFa
 import requests as requesthttp
 
-@api_view(['POST'])
+@api_view(['GET'])
 @csrf_exempt
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -31,7 +31,7 @@ def geListPlayers(request):
                 'team':player.team,
             } )
 
-        return Response(listPlayers,status=200)
+        return Response({'players':listPlayers},status=200)
 
     except KeyError as e:
         print(e)
@@ -47,29 +47,33 @@ def geTeam(request):
         teamN = request.data['name']
         page_num = request.data['page']
         teamPlay = list(dbFiFa.gamer.objects.filter(team__icontains=teamN,page=page_num))
+
         teamPlayers = []
-        for player in teamPlay:
-            teamPlayers.append({
-                'id':player.id,
-                'name':player.name,
-                'game_position':player.game_position,
-                'nationality': player.nationality,
-                'team':player.team,
-            } )
-        totalPages = 1
-        totalItems = len(teamPlay)
-        items = len(teamPlay)
-        jsonRepon = {
-            "Page":page_num,
-            "totalPages":totalPages,
-            "Items": items,
-            "totalItems":totalItems,
-            "Players": teamPlayers
-        }
+        if teamPlay != []:
 
+            for player in teamPlay:
+                teamPlayers.append({
+                    'id':player.id,
+                    'name':player.name,
+                    'game_position':player.game_position,
+                    'nationality': player.nationality,
+                    'team':player.team,
+                } )
+            totalPages = 1
+            totalItems = len(teamPlay)
+            items = len(teamPlay)
+            jsonRepon = {
+                "name":teamN,
+                "Page":page_num,
+                "totalPages":totalPages,
+                "Items": items,
+                "totalItems":totalItems,
+                "Players": teamPlayers
+            }
 
-
-        return Response(jsonRepon,status=200)
+            return Response(jsonRepon,status=200)
+        else:
+            return Response("The Team is not in the Database",status=305)
 
     except KeyError as e:
         print(e)
@@ -95,30 +99,31 @@ def getPlayers(request):
             listPlayers =  sorted(listPlayers, key=lambda player: player.name, reverse=False)
 
         listPla = []
-        for player in listPlayers:
-            listPla.append({
-                'id':player.id,
-                'name':player.name,
-                'game_position':player.game_position,
-                'nationality': player.nationality,
-                'team':player.team,
-            } )
+        if listPla != []:
+            for player in listPlayers:
+                listPla.append({
+                    'id':player.id,
+                    'name':player.name,
+                    'game_position':player.game_position,
+                    'nationality': player.nationality,
+                    'team':player.team,
+                } )
 
-        
-        print(listPlayers)
-        totalPages = 1
-        totalItems = len(listPlayers)
-        items = len(listPlayers)
-        jsonRepon = {
-            "Page":page_p,
-            "totalPages":totalPages,
-            "Items": items,
-            "totalItems":totalItems,
-            "Players": listPla
-        }
-
-
-        return Response(jsonRepon,status=200)
+            
+            print(listPlayers)
+            totalPages = 1
+            totalItems = len(listPlayers)
+            items = len(listPlayers)
+            jsonRepon = {
+                "Page":page_p,
+                "totalPages":totalPages,
+                "Items": items,
+                "totalItems":totalItems,
+                "Players": listPla
+            }
+            return Response(jsonRepon,status=200)
+        else:
+            return Response("not match in the Database",status=305)
 
     except KeyError as e:
         print(e)
