@@ -10,7 +10,7 @@ se utilizo una base de datos Postgres alojada remotamente con google Cloud, los 
  # 2 Api rest
  se creo el api con django api rest framework
  tambien cree una colecion en postman que tiene los end points y algunos extra como de autentificacion via token y lista de jugadores
- solo tocaria agregarle el hanbiente {{url}} o reamplazarlo con la url
+ solo tocaria agregarle el ambiente {{url}} o reamplazarlo con la url
  en los puntos solicitados cumple con el nombre de los endpoints.
  
 # Dockers
